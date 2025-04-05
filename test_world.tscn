@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=4 uid="uid://c4ahb3qh21wij"]
+
+[ext_resource type="TileSet" uid="uid://di4ajtwnckgkl" path="res://ColliderSet.tres" id="1_kxgx6"]
+[ext_resource type="PackedScene" uid="uid://c07fpxr3kbpqd" path="res://Scenes/Player.tscn" id="2_qodfl"]
+
+[node name="TestWorld" type="Node2D"]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAADAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAFAAAAAAAAAAAAAAAGAAAAAAAAAAAAAAD//wAAAAAAAAAAAAD+/wAAAAAAAAAAAAD9/wAAAAAAAAAAAAD8/wAAAAAAAAAAAAD7/wAAAAAAAAAAAAD6/wAAAAAAAAAAAAD5/wAAAAAAAAAAAAA=")
+tile_set = ExtResource("1_kxgx6")
+
+[node name="Character" parent="." instance=ExtResource("2_qodfl")]
+position = Vector2(0, -26)
+
+[node name="Camera2D" type="Camera2D" parent="Character"]

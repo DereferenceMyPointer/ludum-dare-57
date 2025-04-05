@@ -1,0 +1,214 @@
+[gd_scene load_steps=23 format=3 uid="uid://c07fpxr3kbpqd"]
+
+[ext_resource type="Script" path="res://Scripts/Player/PlayerCharacter.gd" id="1_r7tyx"]
+[ext_resource type="Script" path="res://Scripts/Character/CharacterStats.gd" id="2_gimfe"]
+[ext_resource type="Texture2D" uid="uid://cyq4mdagwhdu6" path="res://Art/Player/PlayerRefSheet.png" id="3_j7skk"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerMoveState.gd" id="4_fy830"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerJumpState.gd" id="5_a1tb3"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerFallState.gd" id="6_t5f3h"]
+[ext_resource type="AudioStream" uid="uid://c1o5etih5d787" path="res://Music/SFX/Step1.mp3" id="7_e577r"]
+[ext_resource type="Script" path="res://Scripts/VariedAudioPlayer.gd" id="8_c4w5b"]
+[ext_resource type="AudioStream" uid="uid://cf4dxrypmqbav" path="res://Music/SFX/Step2.mp3" id="8_woioy"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerInteractionBox.gd" id="10_fm2go"]
+
+[sub_resource type="Resource" id="Resource_6l3x8"]
+script = ExtResource("2_gimfe")
+base_speed = 200.0
+base_jump_speed = 400.0
+base_jump_height = 96.0
+base_gravity_scale = 2600.0
+base_fall_cap = 800.0
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_88873"]
+radius = 5.0
+height = 28.0
+
+[sub_resource type="Animation" id="Animation_krtnx"]
+resource_name = "Fall"
+length = 0.3
+loop_mode = 1
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [7, 8]
+}
+
+[sub_resource type="Animation" id="Animation_pjjsh"]
+resource_name = "Fly"
+length = 0.3
+loop_mode = 1
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [5, 6]
+}
+
+[sub_resource type="Animation" id="Animation_1gvak"]
+resource_name = "Idle"
+length = 0.3
+loop_mode = 1
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_v1cj4"]
+resource_name = "Jump"
+length = 0.15
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+
+[sub_resource type="Animation" id="Animation_bg2qa"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_fepxl"]
+resource_name = "Run"
+length = 0.3
+loop_mode = 1
+step = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.142857),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_rdir1"]
+_data = {
+"Fall": SubResource("Animation_krtnx"),
+"Fly": SubResource("Animation_pjjsh"),
+"Idle": SubResource("Animation_1gvak"),
+"Jump": SubResource("Animation_v1cj4"),
+"RESET": SubResource("Animation_bg2qa"),
+"Run": SubResource("Animation_fepxl")
+}
+
+[sub_resource type="Curve" id="Curve_4pq3v"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.984536, 0.516483), -0.65596, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_3bywx"]
+curve = SubResource("Curve_4pq3v")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2k5t4"]
+radius = 15.0
+
+[node name="Character" type="CharacterBody2D" node_paths=PackedStringArray("state", "default_state", "interactor", "anim", "graphic")]
+script = ExtResource("1_r7tyx")
+state = NodePath("States/PlayerMoveState")
+default_state = NodePath("States/PlayerMoveState")
+interactor = NodePath("PlayerInteractionBox")
+attributes = SubResource("Resource_6l3x8")
+anim = NodePath("Sprite2D/AnimationPlayer")
+graphic = NodePath("Sprite2D")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CapsuleShape2D_88873")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -1)
+texture = ExtResource("3_j7skk")
+hframes = 9
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_rdir1")
+}
+
+[node name="States" type="Node" parent="."]
+
+[node name="PlayerMoveState" type="Node" parent="States" node_paths=PackedStringArray("jump", "fall", "step_1", "step_2")]
+script = ExtResource("4_fy830")
+jump = NodePath("../PlayerJumpState")
+fall = NodePath("../PlayerFallState")
+step_1 = NodePath("../../Audio/Step1")
+step_2 = NodePath("../../Audio/Step2")
+step_rate = 0.3
+
+[node name="PlayerJumpState" type="Node" parent="States" node_paths=PackedStringArray("move", "fall")]
+script = ExtResource("5_a1tb3")
+move = NodePath("../PlayerMoveState")
+fall = NodePath("../PlayerFallState")
+speed_graph = SubResource("CurveTexture_3bywx")
+
+[node name="PlayerFallState" type="Node" parent="States" node_paths=PackedStringArray("move", "land_1", "land_2")]
+script = ExtResource("6_t5f3h")
+move = NodePath("../PlayerMoveState")
+land_1 = NodePath("../../Audio/Step1")
+land_2 = NodePath("../../Audio/Step2")
+
+[node name="Audio" type="Node2D" parent="."]
+
+[node name="Step1" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("7_e577r")
+max_polyphony = 2
+script = ExtResource("8_c4w5b")
+max_variation = 0.2
+
+[node name="Step2" type="AudioStreamPlayer2D" parent="Audio"]
+stream = ExtResource("8_woioy")
+max_polyphony = 2
+script = ExtResource("8_c4w5b")
+max_variation = 0.2
+
+[node name="PlayerInteractionBox" type="Area2D" parent="." node_paths=PackedStringArray("master")]
+script = ExtResource("10_fm2go")
+master = NodePath("..")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerInteractionBox"]
+shape = SubResource("CircleShape2D_2k5t4")

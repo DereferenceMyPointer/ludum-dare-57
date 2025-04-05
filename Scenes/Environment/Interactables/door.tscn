@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://cyqeepkonrt22"]
+
+[ext_resource type="Script" path="res://Scripts/Environment/Door.gd" id="1_vnaav"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerNoControlState.gd" id="2_ex830"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mttd0"]
+size = Vector2(32, 64)
+
+[sub_resource type="Curve2D" id="Curve2D_8rbl0"]
+
+[node name="Door" type="Area2D" node_paths=PackedStringArray("enter_line", "enter_state")]
+script = ExtResource("1_vnaav")
+enter_line = NodePath("Path2D/PathFollow2D")
+animation = "Run"
+enter_state = NodePath("PlayerNoControlState")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -32)
+shape = SubResource("RectangleShape2D_mttd0")
+
+[node name="Path2D" type="Path2D" parent="."]
+curve = SubResource("Curve2D_8rbl0")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+
+[node name="PlayerNoControlState" type="Node" parent="."]
+script = ExtResource("2_ex830")
+animation_string = "Idle"
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
