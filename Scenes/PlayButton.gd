@@ -1,4 +1,5 @@
 extends TextureButton
+class_name PlayButton
 
 @export var starting_scene: PackedScene
 @export var root: Node

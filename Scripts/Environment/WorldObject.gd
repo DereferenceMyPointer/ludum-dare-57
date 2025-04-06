@@ -1,3 +1,3 @@
 extends Node
 
-@onready var room_database: RoomDatabase = preload("res://Environment/AllRooms.tres")
+@onready var room_database: RoomDatabase = load("res://Environment/AllRooms.tres")

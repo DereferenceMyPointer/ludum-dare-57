@@ -14,7 +14,8 @@ config/name="Ludum Dare 57"
 run/main_scene="res://Scenes/title_screen.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 boot_splash/bg_color=Color(0.0920836, 0.0821538, 0.0812513, 1)
-config/icon="res://icon.svg"
+boot_splash/image="res://Unreferencelogo_upscale2.png"
+config/icon="res://Iconupcsale.png"
 
 [autoload]
 
