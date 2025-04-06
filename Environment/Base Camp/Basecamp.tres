@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="RoomData" load_steps=3 format=3 uid="uid://bxm4el8pb1ocg"]
+
+[ext_resource type="PackedScene" uid="uid://bsr7d7oo4r5ac" path="res://Scenes/Environment/basecamp.tscn" id="1_2j68j"]
+[ext_resource type="Script" path="res://Scripts/Environment/RoomData.gd" id="1_jmkhc"]
+
+[resource]
+script = ExtResource("1_jmkhc")
+id = "Basecamp"
+scene = ExtResource("1_2j68j")

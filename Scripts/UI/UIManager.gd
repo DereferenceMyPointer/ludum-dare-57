@@ -10,6 +10,8 @@ var fade_elapse := 0.0
 
 func _ready():
 	UiGlobalEventBus.fade_to_black.connect(fade_to_black)
+	UiGlobalEventBus.unfade.connect(unfade)
+	UiGlobalEventBus.unfade.emit()
 
 func fade_to_black():
 	fading = true
@@ -23,6 +25,7 @@ func _process(delta):
 		cover.modulate.a = (anim_speed - fade_elapse) / anim_speed
 		fade_elapse += delta
 		if fade_elapse >= anim_speed:
+			unfading = false
 			fading = false
 			fade_elapse = 0
 			UiGlobalEventBus.fade_over.emit()
@@ -32,5 +35,6 @@ func _process(delta):
 		fade_elapse += delta
 		if fade_elapse >= anim_speed:
 			fading = false
+			unfading = false
 			fade_elapse = 0
 			UiGlobalEventBus.fade_over.emit()

@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://cr7b24nf4a12a"]
+[gd_scene load_steps=7 format=3 uid="uid://cr7b24nf4a12a"]
 
 [ext_resource type="Script" path="res://Scripts/UI/UIEventBus.gd" id="1_4gj4e"]
 [ext_resource type="Texture2D" uid="uid://c1evlq0ktm103" path="res://Art/UI/BGCover.png" id="2_0hvh0"]
 [ext_resource type="Script" path="res://Scripts/UI/UIManager.gd" id="2_2j0pp"]
-[ext_resource type="PackedScene" uid="uid://cnddtigfgghad" path="res://Scenes/Environment/bedroom.tscn" id="3_1q0vr"]
+[ext_resource type="PackedScene" uid="uid://b8jmqxhdkib6g" path="res://Scenes/Environment/bedroom.tscn" id="3_1q0vr"]
+[ext_resource type="PackedScene" uid="uid://bu7fqksjs0yxc" path="res://Scenes/camera_locomotor.tscn" id="5_xuceb"]
+[ext_resource type="PackedScene" uid="uid://c07fpxr3kbpqd" path="res://Scenes/Player.tscn" id="6_c6xj8"]
 
 [node name="World" type="Node2D"]
 
@@ -28,6 +30,16 @@ offset_right = 640.0
 offset_bottom = 360.0
 texture = ExtResource("2_0hvh0")
 
+[node name="CameraLocomotor" parent="." node_paths=PackedStringArray("target") instance=ExtResource("5_xuceb")]
+position = Vector2(106, 105)
+target = NodePath("../Level/Room/0/Character")
+
 [node name="Level" type="Node2D" parent="."]
 
-[node name="Bedroom" parent="Level" instance=ExtResource("3_1q0vr")]
+[node name="Room" parent="Level" instance=ExtResource("3_1q0vr")]
+
+[node name="Character" parent="Level/Room/0" index="7" instance=ExtResource("6_c6xj8")]
+position = Vector2(106, 105)
+
+[editable path="Level/Room"]
+[editable path="Level/Room/0/Door2"]

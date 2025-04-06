@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="RoomDatabase" load_steps=7 format=3 uid="uid://dhbskrd6ar4qe"]
+
+[ext_resource type="Script" path="res://Scripts/Environment/RoomDatabase.gd" id="1_d3ujb"]
+[ext_resource type="Script" path="res://Scripts/Environment/RoomData.gd" id="1_tq1xd"]
+[ext_resource type="Resource" uid="uid://ctdbxufmw8vil" path="res://Environment/Bedroom/Bedroom.tres" id="2_elqfy"]
+[ext_resource type="Resource" uid="uid://wj4wh7ayhxq8" path="res://Environment/Hall/Hall.tres" id="3_aclma"]
+[ext_resource type="Resource" uid="uid://bxm4el8pb1ocg" path="res://Environment/Base Camp/Basecamp.tres" id="4_py8yp"]
+[ext_resource type="Resource" uid="uid://7exra131hxh5" path="res://Environment/The Maw/Maw.tres" id="5_oy0n0"]
+
+[resource]
+script = ExtResource("1_d3ujb")
+rooms = Array[ExtResource("1_tq1xd")]([ExtResource("2_elqfy"), ExtResource("3_aclma"), ExtResource("4_py8yp"), ExtResource("5_oy0n0")])

@@ -3,6 +3,7 @@ class_name PlayerMoveState
 
 @export var jump: PlayerState
 @export var fall: PlayerState
+@export var attack: PlayerState
 @export var step_1: VariedAudioPlayer
 @export var step_2: VariedAudioPlayer
 @export var step_rate: float
@@ -21,6 +22,10 @@ func do(p: PlayerCharacter, delta):
 	# Manage animation
 	if Input.is_action_just_pressed("Jump"): p.set_state(jump)
 	if !p.is_on_floor(): p.set_state(fall)
+	if Input.is_action_just_pressed("Interact"):
+		p.interactor.interact()
+	if Input.is_action_just_pressed("Fire"):
+		p.set_state(attack)
 
 func do_physics(p: PlayerCharacter, delta):
 	p.move(direction, delta)

@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://cj7m1uyfieoau"]
+
+[ext_resource type="PackedScene" uid="uid://c07fpxr3kbpqd" path="res://Scenes/Player.tscn" id="1_y05a8"]
+[ext_resource type="Script" path="res://Scripts/UI/UIManager.gd" id="2_f8en2"]
+[ext_resource type="PackedScene" uid="uid://bu7fqksjs0yxc" path="res://Scenes/camera_locomotor.tscn" id="2_g0mr2"]
+[ext_resource type="PackedScene" uid="uid://b5nkqam6gccox" path="res://Scenes/Environment/bedroom.tscn" id="3_h0xrn"]
+[ext_resource type="Texture2D" uid="uid://c1evlq0ktm103" path="res://Art/UI/BGCover.png" id="3_vohkj"]
+[ext_resource type="AudioStream" uid="uid://dyibads0tpdu8" path="res://Music/Awaken.mp3" id="6_nadru"]
+
+[node name="World" type="Node2D"]
+
+[node name="CameraLocomotor" parent="." node_paths=PackedStringArray("target") instance=ExtResource("2_g0mr2")]
+position = Vector2(218, 215)
+target = NodePath("../Level/Room/0/Character")
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="UIManager" type="Control" parent="UI" node_paths=PackedStringArray("cover")]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_f8en2")
+cover = NodePath("TextureRect")
+
+[node name="TextureRect" type="TextureRect" parent="UI/UIManager"]
+modulate = Color(0, 0, 0, 1)
+z_index = 500
+z_as_relative = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+texture = ExtResource("3_vohkj")
+
+[node name="Level" type="Node2D" parent="."]
+
+[node name="Room" parent="Level" instance=ExtResource("3_h0xrn")]
+
+[node name="Character" parent="Level/Room/0" index="6" instance=ExtResource("1_y05a8")]
+position = Vector2(218, 215)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_nadru")
+autoplay = true
+
+[editable path="Level/Room"]
+[editable path="Level/Room/0/Door2"]

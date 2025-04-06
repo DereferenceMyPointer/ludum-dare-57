@@ -4,6 +4,7 @@ class_name PlayerCharacter
 @export var state: PlayerState
 @export var default_state: PlayerState
 @export var interactor: PlayerInteractionBox
+@export var collider: CollisionShape2D
 
 func _process(delta):
 	state.do(self, delta)

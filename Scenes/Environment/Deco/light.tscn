@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bblhpdlwy1nmj"]
+
+[ext_resource type="Texture2D" uid="uid://byrvy43ochaa8" path="res://Environment/Bedroom/CircleLight.png" id="1_mmqkt"]
+[ext_resource type="Texture2D" uid="uid://bkmf6372yrlci" path="res://Environment/Hall/Light.png" id="1_wr7nj"]
+
+[node name="Light" type="Sprite2D"]
+texture = ExtResource("1_wr7nj")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 0.57, 0.356863)
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_mmqkt")

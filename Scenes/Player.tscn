@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://c07fpxr3kbpqd"]
+[gd_scene load_steps=32 format=3 uid="uid://c07fpxr3kbpqd"]
 
 [ext_resource type="Script" path="res://Scripts/Player/PlayerCharacter.gd" id="1_r7tyx"]
 [ext_resource type="Script" path="res://Scripts/Character/CharacterStats.gd" id="2_gimfe"]
@@ -7,9 +7,13 @@
 [ext_resource type="Script" path="res://Scripts/Player/PlayerJumpState.gd" id="5_a1tb3"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerFallState.gd" id="6_t5f3h"]
 [ext_resource type="AudioStream" uid="uid://c1o5etih5d787" path="res://Music/SFX/Step1.mp3" id="7_e577r"]
+[ext_resource type="Script" path="res://Scripts/Player/PlayerAttackState.gd" id="7_sp5vv"]
 [ext_resource type="Script" path="res://Scripts/VariedAudioPlayer.gd" id="8_c4w5b"]
 [ext_resource type="AudioStream" uid="uid://cf4dxrypmqbav" path="res://Music/SFX/Step2.mp3" id="8_woioy"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerInteractionBox.gd" id="10_fm2go"]
+[ext_resource type="Script" path="res://Scripts/Character/Hitbox.gd" id="11_y4ulw"]
+[ext_resource type="Texture2D" uid="uid://wqys0oyuhue6" path="res://Art/Player/Swipe.png" id="12_cd8a3"]
+[ext_resource type="AudioStream" uid="uid://cngl5hdjdranp" path="res://Music/SFX/Swipe.mp3" id="14_72r2v"]
 
 [sub_resource type="Resource" id="Resource_6l3x8"]
 script = ExtResource("2_gimfe")
@@ -127,6 +131,23 @@ tracks/0/keys = {
 "values": [2, 3]
 }
 
+[sub_resource type="Animation" id="Animation_mlotr"]
+resource_name = "Swipe"
+length = 0.3
+step = 0.075
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0769231, 0.153846, 0.230769),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [10, 11, 12, 13]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_rdir1"]
 _data = {
 "Fall": SubResource("Animation_krtnx"),
@@ -134,7 +155,8 @@ _data = {
 "Idle": SubResource("Animation_1gvak"),
 "Jump": SubResource("Animation_v1cj4"),
 "RESET": SubResource("Animation_bg2qa"),
-"Run": SubResource("Animation_fepxl")
+"Run": SubResource("Animation_fepxl"),
+"Swipe": SubResource("Animation_mlotr")
 }
 
 [sub_resource type="Curve" id="Curve_4pq3v"]
@@ -147,11 +169,78 @@ curve = SubResource("Curve_4pq3v")
 [sub_resource type="CircleShape2D" id="CircleShape2D_2k5t4"]
 radius = 15.0
 
-[node name="Character" type="CharacterBody2D" node_paths=PackedStringArray("state", "default_state", "interactor", "anim", "graphic")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ybu1g"]
+size = Vector2(16, 29)
+
+[sub_resource type="Animation" id="Animation_cyseo"]
+resource_name = "Attack"
+length = 0.3
+step = 0.075
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.075, 0.15, 0.225),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:z_index")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [15, -5]
+}
+
+[sub_resource type="Animation" id="Animation_1fksk"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:z_index")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pp7l7"]
+_data = {
+"Attack": SubResource("Animation_cyseo"),
+"RESET": SubResource("Animation_1fksk")
+}
+
+[node name="Character" type="CharacterBody2D" node_paths=PackedStringArray("state", "default_state", "interactor", "collider", "anim", "graphic")]
+z_index = 10
 script = ExtResource("1_r7tyx")
 state = NodePath("States/PlayerMoveState")
 default_state = NodePath("States/PlayerMoveState")
 interactor = NodePath("PlayerInteractionBox")
+collider = NodePath("CollisionShape2D")
 attributes = SubResource("Resource_6l3x8")
 anim = NodePath("Sprite2D/AnimationPlayer")
 graphic = NodePath("Sprite2D")
@@ -163,7 +252,7 @@ shape = SubResource("CapsuleShape2D_88873")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(0, -1)
 texture = ExtResource("3_j7skk")
-hframes = 9
+hframes = 14
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
 libraries = {
@@ -172,25 +261,34 @@ libraries = {
 
 [node name="States" type="Node" parent="."]
 
-[node name="PlayerMoveState" type="Node" parent="States" node_paths=PackedStringArray("jump", "fall", "step_1", "step_2")]
+[node name="PlayerMoveState" type="Node" parent="States" node_paths=PackedStringArray("jump", "fall", "attack", "step_1", "step_2")]
 script = ExtResource("4_fy830")
 jump = NodePath("../PlayerJumpState")
 fall = NodePath("../PlayerFallState")
+attack = NodePath("../PlayerAttackState")
 step_1 = NodePath("../../Audio/Step1")
 step_2 = NodePath("../../Audio/Step2")
 step_rate = 0.3
 
-[node name="PlayerJumpState" type="Node" parent="States" node_paths=PackedStringArray("move", "fall")]
+[node name="PlayerJumpState" type="Node" parent="States" node_paths=PackedStringArray("move", "fall", "attack")]
 script = ExtResource("5_a1tb3")
 move = NodePath("../PlayerMoveState")
 fall = NodePath("../PlayerFallState")
+attack = NodePath("../PlayerAttackState")
 speed_graph = SubResource("CurveTexture_3bywx")
 
-[node name="PlayerFallState" type="Node" parent="States" node_paths=PackedStringArray("move", "land_1", "land_2")]
+[node name="PlayerFallState" type="Node" parent="States" node_paths=PackedStringArray("move", "attack", "land_1", "land_2")]
 script = ExtResource("6_t5f3h")
 move = NodePath("../PlayerMoveState")
+attack = NodePath("../PlayerAttackState")
 land_1 = NodePath("../../Audio/Step1")
 land_2 = NodePath("../../Audio/Step2")
+
+[node name="PlayerAttackState" type="Node" parent="States" node_paths=PackedStringArray("hitbox", "anim", "audio")]
+script = ExtResource("7_sp5vv")
+hitbox = NodePath("../../Hitbox")
+anim = NodePath("../../Hitbox/Sprite2D/AnimationPlayer")
+audio = NodePath("../../Hitbox/Slash1")
 
 [node name="Audio" type="Node2D" parent="."]
 
@@ -212,3 +310,27 @@ master = NodePath("..")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerInteractionBox"]
 shape = SubResource("CircleShape2D_2k5t4")
+
+[node name="Hitbox" type="Area2D" parent="."]
+visible = false
+script = ExtResource("11_y4ulw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(12, 0.5)
+shape = SubResource("RectangleShape2D_ybu1g")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Hitbox"]
+position = Vector2(8, 0)
+texture = ExtResource("12_cd8a3")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Hitbox/Sprite2D"]
+libraries = {
+"": SubResource("AnimationLibrary_pp7l7")
+}
+
+[node name="Slash1" type="AudioStreamPlayer2D" parent="Hitbox"]
+stream = ExtResource("14_72r2v")
+script = ExtResource("8_c4w5b")
+max_variation = 0.2

@@ -1,0 +1,153 @@
+[gd_scene load_steps=19 format=4 uid="uid://d00urhl4bi6v8"]
+
+[ext_resource type="Script" path="res://Scripts/Environment/Room.gd" id="1_6ojs7"]
+[ext_resource type="Texture2D" uid="uid://bhlsk7iw1wn3m" path="res://Environment/The Maw/BG/Layer0.png" id="2_elfia"]
+[ext_resource type="Texture2D" uid="uid://cu4mtefses6x4" path="res://Environment/The Maw/BG/Layer1.png" id="3_x65g8"]
+[ext_resource type="Texture2D" uid="uid://cs31oclfhdfx0" path="res://Environment/The Maw/BG/Layer2.png" id="4_8atof"]
+[ext_resource type="Texture2D" uid="uid://bqkl6qyvs7mdw" path="res://Environment/The Maw/FaceLayer0.png" id="4_nuhw1"]
+[ext_resource type="Texture2D" uid="uid://be2e2vuxdpni" path="res://Environment/The Maw/BG/Layer3.png" id="5_l7pmb"]
+[ext_resource type="Texture2D" uid="uid://b7a2inp3isgnd" path="res://Environment/The Maw/BG/Layer4.png" id="6_dj3gm"]
+[ext_resource type="Texture2D" uid="uid://k18o0cgdinw0" path="res://Environment/The Maw/FaceLayer1.png" id="6_ksqt4"]
+[ext_resource type="Texture2D" uid="uid://ddt3qkifrjxbc" path="res://Environment/The Maw/RobotFace.png" id="7_uiqka"]
+[ext_resource type="Texture2D" uid="uid://k11popo2cahp" path="res://Environment/The Maw/FaceLayer2.png" id="8_267lf"]
+[ext_resource type="Texture2D" uid="uid://dan05a3tffghw" path="res://Environment/The Maw/BG/Layer5.png" id="8_aissj"]
+[ext_resource type="TileSet" uid="uid://b5pv231jff1c5" path="res://CameraColliderSet.tres" id="9_b2vua"]
+[ext_resource type="PackedScene" uid="uid://cyqeepkonrt22" path="res://Scenes/Environment/Interactables/door.tscn" id="10_balwv"]
+[ext_resource type="PackedScene" uid="uid://tabw6gierv73" path="res://Scenes/Environment/Interactables/sting_trigger.tscn" id="11_lc787"]
+[ext_resource type="AudioStream" uid="uid://dt06fogo1as78" path="res://Music/SFX/Sting.mp3" id="12_mslpd"]
+[ext_resource type="TileSet" uid="uid://di4ajtwnckgkl" path="res://ColliderSet.tres" id="14_h3d70"]
+
+[sub_resource type="Curve2D" id="Curve2D_xu06i"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, -16, 0, 0, 0, 0, 79, -16)
+}
+point_count = 2
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ec0do"]
+size = Vector2(210, 88)
+
+[node name="Room" type="Node2D" node_paths=PackedStringArray("doors", "cam_spawn")]
+script = ExtResource("1_6ojs7")
+doors = [NodePath("0/Door")]
+cam_spawn = NodePath("Marker2D")
+
+[node name="-1" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+follow_viewport_scale = 0.4
+
+[node name="Layer0" type="Sprite2D" parent="-1"]
+position = Vector2(480, 160)
+scale = Vector2(2.5, 2.5)
+texture = ExtResource("2_elfia")
+
+[node name="-2" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+follow_viewport_scale = 0.5
+
+[node name="Layer1" type="Sprite2D" parent="-2"]
+position = Vector2(480, 160)
+scale = Vector2(2, 2)
+texture = ExtResource("3_x65g8")
+
+[node name="-3" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+follow_viewport_scale = 0.6
+
+[node name="FaceLayer0" type="Sprite2D" parent="-3"]
+position = Vector2(463.333, 160)
+scale = Vector2(1.667, 1.667)
+texture = ExtResource("4_nuhw1")
+
+[node name="Layer2" type="Sprite2D" parent="-3"]
+position = Vector2(480, 160)
+scale = Vector2(1.667, 1.667)
+texture = ExtResource("4_8atof")
+
+[node name="-4" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+follow_viewport_scale = 0.7
+
+[node name="FaceLayer1" type="Sprite2D" parent="-4"]
+position = Vector2(474.286, 177.143)
+scale = Vector2(1.429, 1.429)
+texture = ExtResource("6_ksqt4")
+
+[node name="Layer3" type="Sprite2D" parent="-4"]
+position = Vector2(480, 160)
+scale = Vector2(1.429, 1.429)
+texture = ExtResource("5_l7pmb")
+
+[node name="-5" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+follow_viewport_scale = 0.8
+
+[node name="FaceLayer2" type="Sprite2D" parent="-5"]
+position = Vector2(485, 166.25)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("8_267lf")
+
+[node name="Layer4" type="Sprite2D" parent="-5"]
+position = Vector2(480, 160)
+scale = Vector2(1.25, 1.25)
+texture = ExtResource("6_dj3gm")
+
+[node name="-6" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+follow_viewport_scale = 0.9
+
+[node name="RobotFace" type="Sprite2D" parent="-6"]
+position = Vector2(480, 160)
+scale = Vector2(1.111, 1.111)
+texture = ExtResource("7_uiqka")
+
+[node name="0" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="StingTrigger" parent="0" instance=ExtResource("11_lc787")]
+position = Vector2(467, 299)
+scale = Vector2(2, 2)
+check_string = "FaceReveal"
+stream = ExtResource("12_mslpd")
+
+[node name="Layer5" type="Sprite2D" parent="0"]
+position = Vector2(480, 160)
+texture = ExtResource("8_aissj")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="0"]
+tile_map_data = PackedByteArray("AAD//xUAAAAAAAAAAAA8ABUAAAAAAAAAAAA8AP7/AAAAAAAAAAA8AP//AAAAAAAAAAA8AAAAAAAAAAAAAAA8AAEAAAAAAAAAAAA8AAIAAAAAAAAAAAA8AAMAAAAAAAAAAAA8AAQAAAAAAAAAAAA8AAUAAAAAAAAAAAA8AAYAAAAAAAAAAAA8AAcAAAAAAAAAAAA8AAgAAAAAAAAAAAA8AAkAAAAAAAAAAAA8AAoAAAAAAAAAAAA8AAsAAAAAAAAAAAA8AAwAAAAAAAAAAAA8AA0AAAAAAAAAAAA8AA4AAAAAAAAAAAA8AA8AAAAAAAAAAAA8ABAAAAAAAAAAAAA8ABEAAAAAAAAAAAA8ABIAAAAAAAAAAAA8ABMAAAAAAAAAAAA8ABQAAAAAAAAAAAD///7/AAAAAAAAAAD/////AAAAAAAAAAD//wAAAAAAAAAAAAD//wEAAAAAAAAAAAD//wIAAAAAAAAAAAD//wMAAAAAAAAAAAD//wQAAAAAAAAAAAD//wUAAAAAAAAAAAD//wYAAAAAAAAAAAD//wcAAAAAAAAAAAD//wgAAAAAAAAAAAD//wkAAAAAAAAAAAD//woAAAAAAAAAAAD//wsAAAAAAAAAAAD//wwAAAAAAAAAAAD//w0AAAAAAAAAAAD//w4AAAAAAAAAAAD//w8AAAAAAAAAAAD//xAAAAAAAAAAAAD//xEAAAAAAAAAAAD//xIAAAAAAAAAAAD//xMAAAAAAAAAAAD//xQAAAAAAAAAAAD///v/AAAAAAAAAAAAAPv/AAAAAAAAAAABAPv/AAAAAAAAAAACAPv/AAAAAAAAAAADAPv/AAAAAAAAAAAEAPv/AAAAAAAAAAAFAPv/AAAAAAAAAAAGAPv/AAAAAAAAAAAHAPv/AAAAAAAAAAAIAPv/AAAAAAAAAAAJAPv/AAAAAAAAAAAKAPv/AAAAAAAAAAALAPv/AAAAAAAAAAAMAPv/AAAAAAAAAAANAPv/AAAAAAAAAAAOAPv/AAAAAAAAAAAPAPv/AAAAAAAAAAAQAPv/AAAAAAAAAAARAPv/AAAAAAAAAAASAPv/AAAAAAAAAAATAPv/AAAAAAAAAAAUAPv/AAAAAAAAAAAVAPv/AAAAAAAAAAAWAPv/AAAAAAAAAAAXAPv/AAAAAAAAAAAYAPv/AAAAAAAAAAAZAPv/AAAAAAAAAAAaAPv/AAAAAAAAAAAbAPv/AAAAAAAAAAAcAPv/AAAAAAAAAAAdAPv/AAAAAAAAAAAeAPv/AAAAAAAAAAAfAPv/AAAAAAAAAAAgAPv/AAAAAAAAAAAhAPv/AAAAAAAAAAAiAPv/AAAAAAAAAAAjAPv/AAAAAAAAAAAkAPv/AAAAAAAAAAAlAPv/AAAAAAAAAAAmAPv/AAAAAAAAAAAnAPv/AAAAAAAAAAAoAPv/AAAAAAAAAAApAPv/AAAAAAAAAAAqAPv/AAAAAAAAAAArAPv/AAAAAAAAAAAsAPv/AAAAAAAAAAAtAPv/AAAAAAAAAAAuAPv/AAAAAAAAAAAvAPv/AAAAAAAAAAAwAPv/AAAAAAAAAAAxAPv/AAAAAAAAAAAyAPv/AAAAAAAAAAAzAPv/AAAAAAAAAAA0APv/AAAAAAAAAAA1APv/AAAAAAAAAAA2APv/AAAAAAAAAAA3APv/AAAAAAAAAAA4APv/AAAAAAAAAAA5APv/AAAAAAAAAAA6APv/AAAAAAAAAAA7APv/AAAAAAAAAAA8APv/AAAAAAAAAAA8APz/AAAAAAAAAAA8AP3/AAAAAAAAAAA8ABYAAAAAAAAAAAD//xYAAAAAAAAAAAAAABYAAAAAAAAAAAABABYAAAAAAAAAAAACABYAAAAAAAAAAAADABYAAAAAAAAAAAAEABYAAAAAAAAAAAAFABYAAAAAAAAAAAAGABYAAAAAAAAAAAAHABYAAAAAAAAAAAAIABYAAAAAAAAAAAAJABYAAAAAAAAAAAAKABYAAAAAAAAAAAALABYAAAAAAAAAAAAMABYAAAAAAAAAAAANABYAAAAAAAAAAAAOABYAAAAAAAAAAAAPABYAAAAAAAAAAAAQABYAAAAAAAAAAAARABYAAAAAAAAAAAASABYAAAAAAAAAAAATABYAAAAAAAAAAAAUABYAAAAAAAAAAAAVABYAAAAAAAAAAAAWABYAAAAAAAAAAAAXABYAAAAAAAAAAAAYABYAAAAAAAAAAAAZABYAAAAAAAAAAAAaABYAAAAAAAAAAAAbABYAAAAAAAAAAAAcABYAAAAAAAAAAAAdABYAAAAAAAAAAAAeABYAAAAAAAAAAAAfABYAAAAAAAAAAAAgABYAAAAAAAAAAAAhABYAAAAAAAAAAAAiABYAAAAAAAAAAAAjABYAAAAAAAAAAAAkABYAAAAAAAAAAAAlABYAAAAAAAAAAAAmABYAAAAAAAAAAAAnABYAAAAAAAAAAAAoABYAAAAAAAAAAAApABYAAAAAAAAAAAAqABYAAAAAAAAAAAArABYAAAAAAAAAAAAsABYAAAAAAAAAAAAtABYAAAAAAAAAAAAuABYAAAAAAAAAAAAvABYAAAAAAAAAAAAwABYAAAAAAAAAAAAxABYAAAAAAAAAAAAyABYAAAAAAAAAAAAzABYAAAAAAAAAAAA0ABYAAAAAAAAAAAA1ABYAAAAAAAAAAAA2ABYAAAAAAAAAAAA3ABYAAAAAAAAAAAA4ABYAAAAAAAAAAAA5ABYAAAAAAAAAAAA6ABYAAAAAAAAAAAA7ABYAAAAAAAAAAAD///z/AAAAAAAAAAD///3/AAAAAAAAAAA=")
+tile_set = ExtResource("9_b2vua")
+
+[node name="Door" parent="0" node_paths=PackedStringArray("scene_root") instance=ExtResource("10_balwv")]
+position = Vector2(-53, 336)
+door_id = "Maw-L"
+target_door = "Basecamp-R"
+target_room_id = "Basecamp"
+scene_root = NodePath("../..")
+
+[node name="Path2D" parent="0/Door" index="1"]
+curve = SubResource("Curve2D_xu06i")
+
+[node name="PathFollow2D" parent="0/Door/Path2D" index="0"]
+position = Vector2(0, -16)
+
+[node name="TileMapLayer2" type="TileMapLayer" parent="0"]
+tile_map_data = PackedByteArray("AAAAABUAAAAAAAAAAAABABUAAAAAAAAAAAACABUAAAAAAAAAAAADABUAAAAAAAAAAAAEABUAAAAAAAAAAAAFABUAAAAAAAAAAAAGABUAAAAAAAAAAAAHABUAAAAAAAAAAAAIABUAAAAAAAAAAAAJABUAAAAAAAAAAAAKABUAAAAAAAAAAAALABUAAAAAAAAAAAAMABUAAAAAAAAAAAANABUAAAAAAAAAAAAOABUAAAAAAAAAAAAPABUAAAAAAAAAAAAQABUAAAAAAAAAAAARABUAAAAAAAAAAAASABUAAAAAAAAAAAATABUAAAAAAAAAAAAUABUAAAAAAAAAAAAVABUAAAAAAAAAAAAWABUAAAAAAAAAAAAXABUAAAAAAAAAAAAYABUAAAAAAAAAAAAZABUAAAAAAAAAAAAaABUAAAAAAAAAAAAbABUAAAAAAAAAAAAcABUAAAAAAAAAAAAdABUAAAAAAAAAAAAeABUAAAAAAAAAAAAfABUAAAAAAAAAAAAgABUAAAAAAAAAAAAhABUAAAAAAAAAAAAiABUAAAAAAAAAAAAjABUAAAAAAAAAAAAkABUAAAAAAAAAAAAlABUAAAAAAAAAAAAmABUAAAAAAAAAAAAnABUAAAAAAAAAAAAoABUAAAAAAAAAAAApABUAAAAAAAAAAAAqABUAAAAAAAAAAAArABUAAAAAAAAAAAAsABUAAAAAAAAAAAAtABUAAAAAAAAAAAAuABUAAAAAAAAAAAAvABUAAAAAAAAAAAAwABUAAAAAAAAAAAAxABUAAAAAAAAAAAAyABUAAAAAAAAAAAAzABUAAAAAAAAAAAA0ABUAAAAAAAAAAAA1ABUAAAAAAAAAAAA2ABUAAAAAAAAAAAA3ABUAAAAAAAAAAAA4ABUAAAAAAAAAAAA5ABUAAAAAAAAAAAA6ABUAAAAAAAAAAAA7ABUAAAAAAAAAAAD5/xUAAAAAAAAAAAD6/xUAAAAAAAAAAAD7/xUAAAAAAAAAAAD8/xUAAAAAAAAAAAD9/xUAAAAAAAAAAAD+/xUAAAAAAAAAAAD5/w8AAAAAAAAAAAD5/xAAAAAAAAAAAAD5/xEAAAAAAAAAAAD5/xIAAAAAAAAAAAD5/xMAAAAAAAAAAAD5/xQAAAAAAAAAAAD6/w8AAAAAAAAAAAD7/w8AAAAAAAAAAAD8/w8AAAAAAAAAAAD9/w8AAAAAAAAAAAD+/w8AAAAAAAAAAAD//w8AAAAAAAAAAAD//xUAAAAAAAAAAAA=")
+tile_set = ExtResource("14_h3d70")
+
+[node name="Door2" parent="0" node_paths=PackedStringArray("scene_root") instance=ExtResource("10_balwv")]
+position = Vector2(498, 333)
+requires_interact = true
+scene_root = NodePath("../..")
+
+[node name="CollisionShape2D" parent="0/Door2" index="0"]
+position = Vector2(2, -44)
+shape = SubResource("RectangleShape2D_ec0do")
+
+[node name="PlayerNoControlState" parent="0/Door2" index="2"]
+animation_string = "Idle"
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(336, 109)
+
+[editable path="0/Door"]
+[editable path="0/Door2"]

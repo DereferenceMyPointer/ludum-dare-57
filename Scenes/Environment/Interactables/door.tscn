@@ -1,18 +1,26 @@
-[gd_scene load_steps=5 format=3 uid="uid://cyqeepkonrt22"]
+[gd_scene load_steps=7 format=3 uid="uid://cyqeepkonrt22"]
 
 [ext_resource type="Script" path="res://Scripts/Environment/Door.gd" id="1_vnaav"]
 [ext_resource type="Script" path="res://Scripts/Player/PlayerNoControlState.gd" id="2_ex830"]
+[ext_resource type="Texture2D" uid="uid://b2rym8gudcjd2" path="res://Art/UI/InArrow.png" id="3_2bx5x"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mttd0"]
 size = Vector2(32, 64)
 
 [sub_resource type="Curve2D" id="Curve2D_8rbl0"]
 
-[node name="Door" type="Area2D" node_paths=PackedStringArray("enter_line", "enter_state")]
+[sub_resource type="Curve2D" id="Curve2D_be5tb"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, -8, 0, 0, 0, 0, 0, -16, 0, 0, 0, 0, 0, -8)
+}
+point_count = 3
+
+[node name="Door" type="Area2D" node_paths=PackedStringArray("enter_line", "enter_state", "in_arrow")]
 script = ExtResource("1_vnaav")
 enter_line = NodePath("Path2D/PathFollow2D")
 animation = "Run"
 enter_state = NodePath("PlayerNoControlState")
+in_arrow = NodePath("Path2D2/PathFollow2D")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, -32)
@@ -22,9 +30,25 @@ shape = SubResource("RectangleShape2D_mttd0")
 curve = SubResource("Curve2D_8rbl0")
 
 [node name="PathFollow2D" type="PathFollow2D" parent="Path2D"]
+rotates = false
+loop = false
 
 [node name="PlayerNoControlState" type="Node" parent="."]
 script = ExtResource("2_ex830")
-animation_string = "Idle"
+animation_string = "Run"
+
+[node name="Path2D2" type="Path2D" parent="."]
+curve = SubResource("Curve2D_be5tb")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Path2D2"]
+visible = false
+position = Vector2(0, -8)
+rotation = -1.5708
+rotates = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Path2D2/PathFollow2D"]
+position = Vector2(8, 3.49691e-07)
+rotation = 1.5708
+texture = ExtResource("3_2bx5x")
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
